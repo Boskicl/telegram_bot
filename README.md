@@ -5,9 +5,12 @@ The following is a telegram messenger bot which will send automatic stock change
 ## Configure cfg.py
 Once you have your token and chat id, you can go into cfg.py and edit the file.
 
-"stock"  -> give the stock symbol inside the list. Can give 1 or 100.
+"stock"  -> give the stock symbol inside the list. Can give 1 or 100. 
+
 "timer"  -> give the timer you want the stock list to give you updated prices.
+
 "token"  -> your telegram bot token.
+
 "chatid" -> your telegram bot chat id.
 
 ## Running bot
