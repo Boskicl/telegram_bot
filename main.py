@@ -107,8 +107,8 @@ class Telegram_stock:
             time.sleep(self.timer)
 
 if __name__ == '__main__':
-    # Telegram config file import ->  dictionsry
-    from cfg_file import *
+    # Telegram config file import ->  dictionary
+    from cfg import *
     symbol = key["stock"]
     timer = key["timer"]
     token = key["token"]
