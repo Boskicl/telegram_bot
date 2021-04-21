@@ -1,14 +1,12 @@
 import sys
 import requests
-import time 
+import time
 import schedule
 import datetime
 # Main packages
 import json
 import yfinance as f
 import urllib.parse
-# Telegram config file
-#import telegram_config as cfg
 
 class Telegram_stock:
     def __init__(self,symbol,timer,token,chat):
@@ -24,6 +22,14 @@ class Telegram_stock:
         else:
             pass
 
+    def check_telegram(self):
+        # Check if telegram token/chat ID are valid
+        if len(self.token) > 40 and len(self.chat) > 5:
+            pass
+        else:
+            print('Telegram config invalid.')
+            quit()
+
     def run_script_timer(self):
         if len(self.timer) <= 2:
             # 60 seconds
@@ -35,17 +41,14 @@ class Telegram_stock:
             quit()
 
     def getstock(self):
-        # Check if telegram tokens are valid
-        if len(self.token) > 40 and len(self.chat) > 5:
-            pass
-        else:
-            print('Telegram config invalid.')
-            quit()
-
-
+        # Check stock ID valid
+        self.check_len_symbol()
+        # Check if telegram valid
+        self.check_telegram()
 
         # Fetch stock symbol currency
         for l in self.symbol:
+            # Initalize each stock variable
             currency = ''
             price = 0
             prev_price = 0
@@ -57,8 +60,7 @@ class Telegram_stock:
             if stock_json["currency"] != '':
                 currency = stock_json["currency"]
 
-
-            # Time to get the stock
+            # Stock collection
             stock = f.download(l, period = '1d')
 
             if prev_price == 0:
@@ -103,10 +105,13 @@ class Telegram_stock:
         while True:
             self.getstock()
             time.sleep(self.timer)
+
 if __name__ == '__main__':
-    symbol = ['TSLA','AAPL','NVDA']
-    timer = 30
-    token = '1768949581:AAF4hIwvBq2vgBTurf8owlFAWJPtmhGrsQQ'
-    chat = '1724783850'
+    # Telegram config file import ->  dictionsry
+    from cfg_file import *
+    symbol = key["stock"]
+    timer = key["timer"]
+    token = key["token"]
+    chat = key["chatid"]
     bot = Telegram_stock(symbol,timer,token,chat)
     bot.main()
